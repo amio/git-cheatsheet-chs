@@ -12,57 +12,51 @@ var commands = [
   { left: "workspace", right: "local_repo", direction: "status",
     cmd: "diff <commit or branch>",
     tags: 'Basic Snapshotting,Inspection and Comparison,Patching',
-    docs: "将当前工作目录与指定的 <commit> 进行比较。可以使用『HEAD』来指定与最新版本进行比较；也可以使用分支的名称，与另外一个分支进行比较。" },
+    docs: "将当前工作目录与指定的 <commit> 进行比较。可以使用「HEAD」来指定与最新版本进行比较；也可以使用分支的名称，与另外一个分支进行比较。" },
 
 
   { left: "workspace", right: "index", direction: "up",
     cmd: "add <file... or dir...>",
     tags: 'Basic Snapshotting',
-    docs: "Adds the current content of new or modified files to the index, thus staging that content for inclusion in the next commit. " +
-            "Use 'add --interactive' to add the modified contents in the workspace interactively to the index." },
+    docs: "将工作目录中的新文件或修改的文件添加到 index 快照，以供稍后提交至版本库。使用「add --interactive」可以交互式地添加文件。" },
   { left: "workspace", right: "index", direction: "up",
     cmd: "add -u",
     tags: 'Basic Snapshotting',
-    docs: "Adds the current content of modified (NOT NEW) files to the index.  This is similar to what 'git commit -a' does in preparation for making a commit."},
+    docs: "将工作目录中有修改的文件（不包含新文件）添加至 index 快照。相当于在提交时使用「git commit -a」命令所添加的文件。"},
   { left: "workspace", right: "index", direction: "up",
     cmd: "rm <file...>",
     tags: 'Basic Snapshotting',
-    docs: "Remove a file from the workspace and the index." },
+    docs: "从工作目录和 index 中移除指定文件。" },
   { left: "workspace", right: "index", direction: "up",
     cmd: "mv <file...>",
     tags: 'Basic Snapshotting',
-    docs: "Move file in the workspace and the index." },
+    docs: "在工作目录和 index 中移动指定文件。" },
 
   { left: "workspace", right: "local_repo", direction: "up",
     cmd: "commit -a -m 'msg'",
     tags: 'Basic Snapshotting',
-    docs: "Commit all files changed since your last commit, except untracked files (ie. all files that are already listed in the index). " +
-          "Remove files in the index that have been removed from the workspace." },
+    docs: "提交所有自上次提交以来修改过的文件（不包括未加入 git 追踪的文件）并从 index 中移除工作目录里已经删除的文件。" },
 
   { left: "workspace", right: "index", direction: "dn",
     cmd: "checkout <file...> or <dir...>",
     tags: 'Branching and Merging',
-    docs: "Updates the file or directory in the workspace, overwriting any local changes. Does NOT switch branches." },
+    docs: "更新工作目录中的指定文件或目录，覆盖所有本地修改。『不』切换分支。" },
 
   { left: "index", right: "index", direction: "status",
     cmd: "reset HEAD <file1> <file2> ...",
     tags: 'Basic Snapshotting',
-    docs: "Remove the specified files from the next commit. " +
-          "Resets the index but not the working tree (i.e., the changed files are preserved but not marked for commit) and " +
-          "reports what has not been updated." },
+    docs: "将指定文件从预备下次提交的快照中移除（不影响工作目录下正在进行的修改）。" },
 
   { left: "index", right: "local_repo", direction: "dn",
     cmd: "reset --soft HEAD^",
     tags: 'Basic Snapshotting',
-    docs: "Undo the last commit, leaving changes in the the index." },
+    docs: "撤销上次提交，将其内容放入 index 快照。" },
 
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "reset --hard",
     tags: 'Basic Snapshotting',
-    docs: "Matches the workspace and index to the local tree. " +
-          "WARNING: Any changes to tracked files in the working tree since commit are lost. " +
-          "Use this if merging has resulted in conflicts and you'd like to start over. " +
-            "Pass ORIG_HEAD to undo the most recent successful merge and any changes after." },
+    docs: "清空工作目录中的所有修改和 index 快照，与本地版本库同步。" +
+          "警告：工作目录中所有未提交的修改都将丢失。通常用于合并冲突而打算重新开始的情况。添加「ORIG_HEAD」参数可以撤销最近一次合并操作及之后的所有改动。" },
 
 
   { left: "workspace", right: "local_repo", direction: "dn",
