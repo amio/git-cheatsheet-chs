@@ -4,7 +4,7 @@ var colors = {
     index: '#ff9640',
     local_repo: '#cd0074',
     remote_repo:'#bf3030'
-}
+};
 
 
 var upColor = colors.workspace.darken(10).saturate(-30);
@@ -17,7 +17,7 @@ var css = {
     'html,body': {
         margin: 0,
         padding: 0,
-        background: 'url(http://ndpsoftware.com/git-cheatsheet/images/vCanvas.jpg)'
+        background: 'url(images/vCanvas.jpg)'
     },
     'a,a:link,a:visited': {
         color: colors.local_repo,
@@ -249,8 +249,7 @@ $(function() {
           '&.selected': {
             opacity: 1.0
           }
-
-        }
+        };
 
       css['body.' + value + ' #commands'] = {
         'div.up':{
