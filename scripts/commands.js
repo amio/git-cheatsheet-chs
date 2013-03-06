@@ -4,18 +4,15 @@ var commands = [
   { left: "workspace", right: "index", direction: "status",
     cmd: "status",
     tags: 'Basic Snapshotting',
-    docs: "Displays paths that have differences between the index file and the current HEAD commit, " +
-        "paths that have differences between the workspace and the index file, " +
-        "and paths in the workspace that are not tracked by git." },
+    docs: "显示在工作目录中与本地版本库最新版本不同的(文件)路径、与 index 快照不同的(文件)路径以及未加入 git 的(文件)路径。" },
   { left: "workspace", right: "index", direction: "status",
     cmd: "diff",
     tags: 'Basic Snapshotting, Inspection and Comparison,Patching',
-    docs: "Displays the differences not added to the index." },
+    docs: "显示未加入 index 快照的修改内容" },
   { left: "workspace", right: "local_repo", direction: "status",
     cmd: "diff <commit or branch>",
     tags: 'Basic Snapshotting,Inspection and Comparison,Patching',
-    docs: "View the changes you have in your workspace relative to the named <commit>. " +
-          "You can use HEAD to compare it with the latest commit, or a branch name to compare with the tip of a different branch" },
+    docs: "将当前工作目录与指定的 <commit> 进行比较。可以使用『HEAD』来指定与最新版本进行比较；也可以使用分支的名称，与另外一个分支进行比较。" },
 
 
   { left: "workspace", right: "index", direction: "up",
