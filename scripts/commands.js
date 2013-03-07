@@ -62,21 +62,21 @@ var commands = [
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "checkout <branch>",
     tags: 'Branching and Merging',
-    docs: "Switches branches by updating the index and workspace to reflect the specified branch, <branch>, and updating HEAD to be <branch>." },
+    docs: "更新 index 和工作目录以切换到指定分支，并且更新 HEAD 到此分支。" },
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "checkout -b <name of new branch>",
     tags: 'Branching and Merging',
-    docs: "Create a branch and switch to it" },
+    docs: "创建并切换到一个新的分支。" },
 
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "merge <commit or branch>",
     tags: 'Branching and Merging',
-    docs: "Merge changes from <branch name> into current branch. Use --no-commit to leave changes uncommitted." },
+    docs: "将 <branch name> 中的内容合并到当前分支。使用 --no-commit 参数可以防止合并之后自动提交，以便审查合并结果之后再进行提交。" },
 
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "rebase <upstream>",
     tags: 'Patching',
-    docs: "Reverts all commits since the current branch diverged from <upstream>, and then re-applies them one-by-one on top of changes from the HEAD of <upstream>." },
+    docs: "撤销自从 <upstream> 分支以来的所有修改提交（commit），然后将这些提交逐个应用于 <upstream> 的 HEAD 上。" },
 
 
 
