@@ -1,28 +1,26 @@
 var commands = [
 
-
   { left: "workspace", right: "index", direction: "status",
     cmd: "status",
     tags: 'Basic Snapshotting',
-    docs: "显示在工作目录中与本地版本库最新版本不同的(文件)路径、与 index 快照不同的(文件)路径以及未加入 git 的(文件)路径。" },
+    docs: "显示在工作目录中与本地版本库最新版本不同的(文件)路径、与 index 不同的(文件)路径以及未加入 git 的(文件)路径。" },
   { left: "workspace", right: "index", direction: "status",
     cmd: "diff",
     tags: 'Basic Snapshotting, Inspection and Comparison,Patching',
-    docs: "显示未加入 index 快照的修改内容" },
+    docs: "显示未加入 index 的修改内容" },
   { left: "workspace", right: "local_repo", direction: "status",
     cmd: "diff <commit or branch>",
     tags: 'Basic Snapshotting,Inspection and Comparison,Patching',
     docs: "将当前工作目录与指定的 <commit> 进行比较。可以使用「HEAD」来指定与最新版本进行比较；也可以使用分支的名称，与另外一个分支进行比较。" },
 
-
   { left: "workspace", right: "index", direction: "up",
     cmd: "add <file... or dir...>",
     tags: 'Basic Snapshotting',
-    docs: "将工作目录中的新文件或修改的文件添加到 index 快照，以供稍后提交至版本库。使用「add --interactive」可以交互式地添加文件。" },
+    docs: "将工作目录中的新文件或修改的文件添加到 index，以供稍后提交至版本库。使用「add --interactive」可以交互式地添加文件。" },
   { left: "workspace", right: "index", direction: "up",
     cmd: "add -u",
     tags: 'Basic Snapshotting',
-    docs: "将工作目录中有修改的文件（不包含新文件）添加至 index 快照。相当于在提交时使用「git commit -a」命令所添加的文件。"},
+    docs: "将工作目录中有修改的文件（不包含新文件）添加至 index。相当于在提交时使用「git commit -a」命令所添加的文件。"},
   { left: "workspace", right: "index", direction: "up",
     cmd: "rm <file...>",
     tags: 'Basic Snapshotting',
@@ -58,7 +56,6 @@ var commands = [
     docs: "清空工作目录中的所有修改和 index 快照，与本地版本库同步。" +
           "警告：工作目录中所有未提交的修改都将丢失。通常用于合并冲突而打算重新开始的情况。添加「ORIG_HEAD」参数可以撤销最近一次合并操作及之后的所有改动。" },
 
-
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "checkout <branch>",
     tags: 'Branching and Merging',
@@ -78,143 +75,134 @@ var commands = [
     tags: 'Patching',
     docs: "撤销自从 <upstream> 分支以来的所有修改提交（commit），然后将这些提交逐个应用于 <upstream> 的 HEAD 上。" },
 
-
-
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "cherry-pick <sha>",
     tags: 'Patching',
-    docs: "Integrate changes in the given commit into the current branch." },
+    docs: "将指定 commit 中的修改合并到当前分支。" },
   { left: "workspace", right: "local_repo", direction: "dn",
     cmd: "revert <sha>",
-    docs: "Reverse commit specified by <sha> and commit the result. " +
-          "This requires your working tree to be clean (no modifications from the HEAD commit)." },
+    docs: "撤销 <sha> 中的修改内容并将结果提交。此项操作需要工作目录中干净无修改。" },
 
   { left: "index", right: "local_repo", direction: "status",
     cmd: "diff --cached [<commit>]",
     tags: 'Basic Snapshotting,Inspection and Comparison,Patching',
-    docs: "View the changes you staged vs the latest commit. Can pass a <commit> to see changes relative to it."},
+    docs: "查看 index 中的修改内容和最新提交的区别。也可以指定某个提交进行比较。"},
   { left: "index", right: "local_repo", direction: "up",
     cmd: "commit -m 'msg'",
     tags: 'Basic Snapshotting',
-    docs: "Stores the current contents of the index in a new commit along with a log message from the user describing the changes." },
+    docs: "将 index 中的修改内容提交，并附上对此次修改的描述。" },
   { left: "index", right: "local_repo", direction: "up",
     cmd: "commit --amend",
     tags: 'Basic Snapshotting',
-    docs: 'Modify the last commit with the current index changes.'},
+    docs: '将当前 index 中的修改内容合并到上一次提交中。'},
 
   { left: "local_repo", right: "local_repo", direction: "status",
     cmd: "log",
     tags: 'Branching and Merging, Inspection and Comparison',
-    docs: 'Show recent commits, most recent on top. Options:' +
-          '--decorate    with branch and tag names on appropriate commits' +
-          '--stat        with stats (files changed, insertions, and deletions)' +
-          '--author=foo  only by a certain author' +
-          '--after="MMM DD YYYY" ex. ("Jun 20 2008") only commits after a certain date' +
-          '--before="MMM DD YYYY" only commits that occur before a certain date' +
-          '--merge       only the commits involved in the current merge conflicts' },
+    docs: '查看提交历史记录，最新的排在最顶端。选项：' +
+          '--decorate    将分支以及标签信息显示在相应的提交旁边' +
+          '--stat        包含文件的增删改信息' +
+          '--author=foo  只显示指定作者的提交' +
+          '--after="MMM DD YYYY" 如 "Jun 20 2008"，只显示某个日期之后的提交' +
+          '--before="MMM DD YYYY" 只显示某个日期之前的提交' +
+          '--merge       只显示跟当前合并冲突有关的提交' },
   { left: "local_repo", right: "local_repo", direction: "status",
     cmd: "diff <commit> <commit>",
     tags: 'Basic Snapshotting, Inspection and Comparison,Patching',
-    docs: "View the changes between two arbitrary commits" },
+    docs: "查看任意两次提交之间的区别。" },
   { left: "local_repo", right: "local_repo", direction: "status",
     cmd: "branch",
     tags: 'Branching and Merging',
-    docs: "List all existing branches. Option -r causes the remote-tracking branches to be listed, and option -a shows both." },
+    docs: "列出所有分支。选项 -r 指定查看远端的分支，选项 -a 则同时查看远端和本地所有分支。" },
   { left: "local_repo", right: "local_repo", direction: "status",
     cmd: "branch -d <branch>",
     tags: 'Branching and Merging',
-    docs: "Delete an specified branch. Use -D to force." },
+    docs: "删除指定分支。使用 -D 选项则强制删除。" },
   { left: 'local_repo', right: 'remote_repo', direction: 'dn',
     cmd: "branch --track <new> <remote/branch>",
     tags: 'Branching and Merging',
-    docs: 'Create a new local branch that tracks a remote branch.'},
-
+    docs: '创建一个映射到指定远端分支的本地分支。'},
 
   { left: "workspace", right: "remote_repo", direction: "dn",
     cmd: "clone <repo>",
     tags: 'Creating Projects',
-    docs: "Download the repository specified by <repo> and checkout HEAD of the master branch." },
+    docs: "下载 <repo> 指定的仓库，并将工作目录签出为 master 分支的最新版本。" },
   { left: "workspace", right: "remote_repo", direction: "dn",
     cmd: "pull <remote> <refspec>",
     tags: 'Sharing and Updating',
-    docs: "Fetch changes from the remote repo and merge them into the current branch." },
+    docs: "获取远端仓库中的指定版本，并将其合并到当前分支。" },
   { left: "workspace", right: "remote_repo", direction: "dn",
     cmd: "reset --hard <remote>/<branch>",
     tags: 'Basic Snapshotting',
-    docs: "Reset local repo and working tree to match a remote branch. Use 'reset --hard origin/master' to throw away all commits to the local master branch. Use this to start over on a failed merge." },
+    docs: "将本地工作目录重置为远端分支版本。使用 'reset --hard origin/master' 会抛弃所有本地 master 分支上的提交，可以用于合并失败时重新开始。" },
   { left: "local_repo", right: "remote_repo", direction: "dn",
     cmd: "fetch <remote> <refspec>",
     tags: 'Sharing and Updating',
-    docs: "Download objects and refs from another repository." },
+    docs: "从远端仓库下载所有内容（包括分支和标签）。" },
   { left: "local_repo", right: "remote_repo", direction: "up",
     cmd: "push",
     tags: 'Sharing and Updating',
-    docs: 'update the server with your commits across all branches that are *COMMON* between your local copy and the server.' +
-          'Local branches that were never pushed to the server in the first place are not shared'},
+    docs: '将所有本地分支的修改推送到远端仓库上的相应分支，但不包括那些从未推送到远端仓库过的分支。'},
   { left: "local_repo", right: "remote_repo", direction: "up",
     cmd: "push <remote> <branch>",
     tags: 'Sharing and Updating',
-    docs: "Push new (or existing) branch to remote repository" },
+    docs: "将一个新的（或现有）分支推送到远端仓库" },
   { left: "local_repo", right: "remote_repo", direction: "up",
     cmd: "push <remote> <branch>:<branch>",
     tags: 'Sharing and Updating',
-    docs: "Push new branch to remote repository with a different name" },
+    docs: "将一个新的（或现有）分支推送到远端仓库的不同名分支上。" },
 
   { left: "remote_repo", right: "remote_repo", direction: "status",
     cmd: "branch -r",
     tags: 'Branching and Merging',
-    docs: "List remote branches" },
+    docs: "列出远端仓库的所有分支。" },
 
   { left: "remote_repo", right: "remote_repo", direction: "status",
     cmd: "push <remote> :<branch>",
     tags: 'Sharing and Updating',
-    docs: "Remove a remote branch" },
+    docs: "删除远端仓库的指定分支。" },
 
   { left: "workspace", right: "workspace", direction: "dn",
     cmd: "clean",
     tags: 'Administration',
-    docs: 'Cleans the working tree by recursively removing files that are not under version control, starting from the current directory.' },
+    docs: '清除当前目录以及所有层级子目录中未加入版本控制的文件。' },
 
   { left: "stash", right: "workspace", direction: "dn",
     cmd: "stash save [<msg>]",
     tags: 'Branching and Merging',
-    docs: 'Save your local modifications to a new stash, and run git reset --hard to revert them. ' +
-        'The <message> part is optional and gives the description along with the stashed state. ' +
-        'For quickly making a snapshot, you can omit both "save" and <message>.' },
+    docs: '将目前的修改内容保存到一个新的 stash 中。运行 "git reset --hard" 可以清除之。 ' +
+        '<message> 是可选的，事实上如果只想立刻做个快照的话 "save" 也可以省略。' },
   { left: "stash", right: "workspace", direction: "up",
     cmd: "stash apply [<name>]",
     tags: 'Branching and Merging',
-    docs: "Move changes from the specified stash into the workspace. The latest stash is the default." },
+    docs: "从指定的 stash 记录中恢复修改到当前工作目录。默认使用最后一次保存的 stash 记录。" },
   { left: "stash", right: "workspace", direction: "up",
     cmd: "stash pop",
     tags: 'Branching and Merging',
-    docs: 'Applies the changes from the last (or specified) stash and then removes the given stash.'},
+    docs: '应用最后一次保存的（或指定的） stash 记录并删除 stash 对它的记录。'},
   { left: "stash", right: "stash", direction: "status",
     cmd: "stash list",
     tags: 'Branching and Merging',
-    docs: "List the stashes that you currently have." },
+    docs: "列出目前所有保存的 stash 记录。" },
   { left: "stash", right: "stash", direction: "status",
     cmd: "stash show [<stash>]",
     tags: 'Branching and Merging',
-    docs: "Show the changes recorded in the stash as a diff between the stashed state and its original parent. " +
-        "When no <stash> is given, shows the latest one." },
+    docs: "以 diff 显示指定 stash 记录中记录的修改内容。未指定 <stash> 的话则采用最后一条 stash 记录。" },
   { left: "stash", right: "stash", direction: "status",
     cmd: "stash drop [<name>]",
     tags: 'Branching and Merging',
-    docs: "Remove a single stashed state from the stash list. When no <stash> is given, it removes the latest one." },
+    docs: "删除 stash 列表中的一条记录。未指定 <stash> 的话则删除最新一条。" },
   { left: "stash", right: "stash", direction: "status",
     cmd: "stash clear",
     tags: 'Branching and Merging',
-    docs: "Remove all the stashed states. Note that those states will then be subject to pruning, and may be impossible to recover." },
+    docs: "清除所有 stash 记录。此项操作不可逆。" },
   { left: "stash", right: "local_repo", direction: "up",
     cmd: "stash branch <branchname> [<stash>]",
     tags: 'Branching and Merging',
-    docs: 'Creates and checks out a new branch named <branchname> starting from the commit at which the <stash> was originally created, ' +
-        'applies the changes recorded in <stash> to the new working tree and index. ' +
-        'If that succeeds, and <stash> is a reference of the form stash@{<revision>}, it then drops the <stash>. ' +
-        'When no <stash> is given, applies the latest one. \r' +
-        'This is useful if the branch on which you ran git stash save has changed enough that git stash apply fails due to conflicts. ' +
-        'Since the stash is applied on top of the commit that was HEAD at the time git stash was run, ' +
-        'it restores the originally stashed state with no conflicts.' }
+    docs: '根据指定的 stash 记录创建一个新的分支，新的分支起点为创建该 stash 记录时所在的提交，并将该 stash 记录中的修改内容应用于' +
+        '工作目录和 index。如果操作成功并且 <stash> 的格式为 stash@{<revision>}，则一并删除此 stash 记录。' +
+        '未指定 <stash> 的话则采用最新一条记录。\r' +
+        '当你在某个分之上执行了 stash save 之后此分支进行了太多修改提交导致严重冲突无法合并回去的时候，这条命令就非常有用了。' +
+        '因为新的恢复操作会应用在创建 stash 记录时的提交基础上，所以不会产生任何冲突。' }
 
 ];
