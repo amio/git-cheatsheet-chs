@@ -1,4 +1,3 @@
-
 var clickMode = false;
 
 function showDocs(doc, cmd) {
@@ -12,7 +11,6 @@ function showDocsForElement($el) {
       cmd = $el.html();
   showDocs(doc, cmd);
 }
-
 
 function currentLoc() {
   return $('#diagram .loc.current').attr('id');
@@ -47,14 +45,11 @@ function selectLoc(id) {
   _gaq.push(['_trackEvent', 'git-cheatsheet', 'select-loc', id, null]);
 }
 
-
-
 $(function () {
 
   (function addBarsToLocDivs() {
     jQuery('.loc').append('<div class="bar" />');
   })();
-
 
   $('body').keydown(function (e) {
     var $cmds = $('#commands>div:visible').toArray();
@@ -77,33 +72,31 @@ $(function () {
     }
   });
 
-
   var left_offset = $('#commands').offset().left;
-  for (i = 0; i < commands.length; i++) {
+  for (var i = 0, c; i < commands.length; i++) {
     c = commands[i];
     var left = $("#" + c.left + " div.bar").offset().left - left_offset;
     var right = $("#" + c.right + " div.bar").offset().left - left_offset;
     var width = right - left;
     if (width < 1) {
-      left -= 90
+      left -= 90;
       width = 200;
     } else {
       left += 10;
       width -= 20;
     }
     var $e = $("<div>" + esc(c.cmd) + "<div class='arrow' /></div>").
-        css('margin-left', left + 'px').
-        css('width', width + 'px').
-        addClass(c.left).
-        addClass(c.right).
-        addClass(c.direction);
+    css('margin-left', left + 'px').
+    css('width', width + 'px').
+    addClass(c.left).
+    addClass(c.right).
+    addClass(c.direction);
     $('#commands').append($e);
 
     if (c.docs) {
       $e.attr('data-docs', esc(c.docs));
     }
   }
-
 
   $('[data-docs]').live('mouseover', function () {
     if ($(this).parents('#commands').length) return; // handled separately
@@ -117,9 +110,9 @@ $(function () {
     }, function () {
       $(this).removeClass(klass);
     });
-  }
+  };
 
-   function selectCommand($cmd) {
+  function selectCommand($cmd) {
     $('#commands>div').removeClass('selected');
     $cmd.addClass('selected');
 
@@ -128,37 +121,37 @@ $(function () {
     showDocs(doc, cmd);
 
     _gaq.push(['_trackEvent', 'git-cheatsheet', 'select', 'git ' + $cmd.text(), null]);
-  };
+  }
 
-  $('#commands>div').click(function(e) {
+  $('#commands>div').click(function (e) {
     clickMode = !clickMode || (clickMode && !$(this).hasClass('selected'));
     if (clickMode) {
       selectCommand($(this));
     } else {
       selectCommand($('#nothing'));
     }
-  }).mouseover(function(e) {
-        if ($(this).hasClass('selected') || clickMode) return;
-        selectCommand($(this));
-      });
+  }).mouseover(function (e) {
+    if ($(this).hasClass('selected') || clickMode) return;
+    selectCommand($(this));
+  });
 
   $("#diagram .loc").
-      click(function () {
-        selectLoc(this.id);
-      }).hoverClass('hovered');
+  click(function () {
+    selectLoc(this.id);
+  }).hoverClass('hovered');
 
   var oldBodyClass = '';
   $('div.stash,div.workspace,div.index,div.local_repo,div.remote_repo').
-      click(
-      function () {
-      }).
-      hover(
-      function () {
-        oldBodyClass = $('body').attr('class');
-      },
-      function () {
-        $('body').attr('class', oldBodyClass);
-      });
+  click(
+  function () {
+  }).
+  hover(
+  function () {
+    oldBodyClass = $('body').attr('class');
+  },
+  function () {
+    $('body').attr('class', oldBodyClass);
+  });
 
   // Highlight given location specified by hash.
   var hash = window.location.hash;
