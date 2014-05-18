@@ -123,30 +123,17 @@ $(function () {
     _gaq.push(['_trackEvent', 'git-cheatsheet', 'select', 'git ' + $cmd.text(), null]);
   }
 
-  $('#commands>div').click(function (e) {
-    clickMode = !clickMode || (clickMode && !$(this).hasClass('selected'));
-    if (clickMode) {
-      selectCommand($(this));
-    } else {
-      selectCommand($('#nothing'));
-    }
-  }).mouseover(function (e) {
+  $('#commands>div').mouseover(function () {
     if ($(this).hasClass('selected') || clickMode) return;
     selectCommand($(this));
   });
 
-  $("#diagram .loc").
-  click(function () {
+  $("#diagram .loc").click(function () {
     selectLoc(this.id);
   }).hoverClass('hovered');
 
   var oldBodyClass = '';
-  $('div.stash,div.workspace,div.index,div.local_repo,div.remote_repo').
-  click(
-  function () {
-  }).
-  hover(
-  function () {
+  $('div.stash,div.workspace,div.index,div.local_repo,div.remote_repo').hover(function () {
     oldBodyClass = $('body').attr('class');
   },
   function () {
